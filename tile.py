@@ -1,16 +1,22 @@
 class tile:
+    """Attributes of the class"""
+    #Color of the tile
     color = 1
-    '''Letters'''
+    #Letters
     x = 1
-    '''Numbers'''
+    #Numbers
     y = 1
-    '''Coordinates'''
+    #Coordinates
     xpos = 0
     ypos = 0
-    '''Tile ocuppied'''
+    #Tile ocuppied
     occupied = False
+
+    #Initiate instance
     def __init__(self):
         self.data = []
+
+    """Getters and setters of the class"""
 
     def get_color(self ):
         return self.color
