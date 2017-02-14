@@ -18,8 +18,10 @@ class pawn(piece):
         else:
             return [2,1,0]
 
+    # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):
         return self.moved()
 
+    # Set the moved attribute to true to avoid special movements
     def setMoved(self):
         self.moved = True

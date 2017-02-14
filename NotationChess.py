@@ -32,6 +32,7 @@ def load():
 """Function to load pieces on the board"""
 def load_pieces():
     for x in pieces:
+        #Load pawns
         if x.equals("p"):
             for y in range(0,8):
                 aux = pawn.pawn()
@@ -43,6 +44,7 @@ def load_pieces():
                 aux.set_y(7-y)
                 aux.set_color(2)
                 black_pieces.append(aux)
+        #Load bishops
         if x.equals("b"):
             for y in range(0,2):
                 aux = bishop.bishop()
@@ -54,6 +56,7 @@ def load_pieces():
                 aux.set_y(3 + y * 3)
                 aux.set_color(2)
                 black_pieces.append(aux)
+        #Load knights
         if x.equals("n"):
             for y in range(0,2):
                 aux = knight.knight()
@@ -65,6 +68,7 @@ def load_pieces():
                 aux.set_y(2 + y * 5)
                 aux.set_color(2)
                 black_pieces.append(aux)
+        #Load rooks
         if x.equals("r"):
             for y in range(0,2):
                 aux = rook.rook()
@@ -76,6 +80,7 @@ def load_pieces():
                 aux.set_y(1 + y * 7)
                 aux.set_color(2)
                 black_pieces.append(aux)
+        #Load queens
         if x.equals("q"):
             aux = queen.queen()
             aux.set_x(1)
@@ -86,6 +91,7 @@ def load_pieces():
             aux.set_y(4)
             aux.set_color(2)
             black_pieces.append(aux)
+        #Load kings
         if x.equals("k"):
             aux = king.king()
             aux.set_x(1)

@@ -16,8 +16,10 @@ class king(piece):
     def get_movement(self):
         return [1,8,1]
 
+    # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):
         return self.moved()
 
+    # Set the moved attribute to true to avoid special movements
     def setMoved(self):
         self.moved = True
