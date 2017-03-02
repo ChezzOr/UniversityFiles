@@ -24,3 +24,9 @@ class rook(piece):
     #Set the moved attribute to true to avoid special movements
     def setMoved(self):
         self.moved = True
+
+    def get_fpw(self):
+        return "sprites/rw.png"
+
+    def get_fpb(self):
+        return "sprites/rb.png"

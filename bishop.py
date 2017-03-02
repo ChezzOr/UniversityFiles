@@ -13,3 +13,9 @@ class bishop(piece):
     # Maximum quantity of square and possible axis, [7,4,1] 8 spaces in 4 possible directions identifies a bishop, 1 means diagonal included
     def get_movement(self):
         return [7,4,1]
+
+    def get_fpw(self):
+        return "sprites/bw.png"
+
+    def get_fpb(self):
+        return "sprites/bb.png"

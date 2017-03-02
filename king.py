@@ -23,3 +23,9 @@ class king(piece):
     # Set the moved attribute to true to avoid special movements
     def setMoved(self):
         self.moved = True
+
+    def get_fpw(self):
+        return "sprites/kw.png"
+
+    def get_fpb(self):
+        return "sprites/kb.png"

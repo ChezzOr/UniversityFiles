@@ -25,3 +25,9 @@ class pawn(piece):
     # Set the moved attribute to true to avoid special movements
     def setMoved(self):
         self.moved = True
+
+    def get_fpw(self):
+        return "sprites/pw.png"
+
+    def get_fpb(self):
+        return "sprites/pb.png"
