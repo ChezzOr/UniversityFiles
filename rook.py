@@ -8,6 +8,7 @@ class rook(piece):
     # Initiate instance
     def __init__(self):
         self.data = []
+        self.name = 'r'
 
     """ Override of abstract class """
 
@@ -16,6 +17,9 @@ class rook(piece):
     # Maximum quantity of square and possible axis, [4,8,3] 4 spaces in 8 possible directions identifies a rook, 0 means no diagonal movement
     def get_movement(self):
         return [7, 4, 0]
+
+    def validate_move(self):
+        return False
 
     #Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):

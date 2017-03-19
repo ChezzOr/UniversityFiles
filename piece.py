@@ -14,6 +14,10 @@ class piece(metaclass=ABCMeta):
     y = 1
     #Alive indicator
     alive = True
+    #Piece name
+    name = ''
+    # Conversion to letter
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
     # Initiate instance
     def __init__(self):
@@ -42,7 +46,17 @@ class piece(metaclass=ABCMeta):
     def isAlive(self):
         return self.alive
 
-    """Abstract method"""
+    def get_name(self):
+        return self.name
+
+    def set_name(self, name):
+        self.name = name
+
+    """Abstract methods"""
     @abstractmethod
     def get_movement(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def validate_move(self):
         raise NotImplementedError()

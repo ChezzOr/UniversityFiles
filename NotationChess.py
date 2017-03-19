@@ -119,6 +119,77 @@ def draw_pieces(screen, board):
         img = image.load(y.get_fpb()).convert_alpha()
         screen.blit(img, (board[(y.get_x()-1)+(y.get_y()-1)*8].get_xpos()+50, board[(y.get_x()-1)+(y.get_y()-1)*8].get_ypos()+100))
 
+"""
+Function to draw the input box an the box containing the previous movements
+"""
+
+
+def draw_input_box(screen, turn):
+    # Remaining space 900 - 580, 320, top 620 120
+    pygame.draw.rect(screen, white, (600, 60, 280, 470))
+    pygame.draw.rect(screen, black, (600, 60, 280, 470), 1)
+    pygame.draw.rect(screen, white, (600, 530, 280, 30))
+    pygame.draw.rect(screen, black, (600, 530, 280, 30), 1)
+    if turn == 1:
+        label = registryFont.render(box_message[0], 1, black)
+    else:
+        label = registryFont.render(box_message[1], 1, black)
+    screen.blit(label, (610, 540))
+
+
+"""
+Functions to obtain the user input and display it to screen
+"""
+
+
+# Method from code inputbox.py, more information at: http://www.pygame.org/pcr/inputbox/
+# The method obtains the keydown event to obtain the pressed key
+def get_key():
+    while 1:
+        event = pygame.event.poll()
+        if event.type == KEYDOWN:
+            print(str(event.key))
+            return event.key
+        elif event.type == QUIT:
+            exit(0)
+        else:
+            pass
+
+
+def get_user_input(screen):
+    user_input = ''
+    while 1:
+        pressed_key = get_key()
+        if pressed_key == K_BACKSPACE:
+            user_input = user_input[:-1]
+        elif pressed_key == K_RETURN:
+            break
+        elif pressed_key in possible_keys:
+            user_input += str(chr(pressed_key))
+        print(user_input)
+        pygame.draw.rect(screen, white, (720, 540, 60, 19))
+        label = registryFont.render(user_input, 1, black)
+        screen.blit(label, (720, 540))
+        pygame.display.flip()
+    return user_input
+
+
+"""
+Function to process and validate user input
+"""
+
+
+def validate_input(input_string, turn):
+    if input_string in special_moves:
+        pass
+    elif input_string[0] in pieces:
+        if turn == 1:
+            possible_piece = [piece for piece in white_pieces
+                              if piece.get_name() == input_string[0]
+                              and piece.validate_move()]
+    else:
+        return False
+
 
 """
 Define the global variables
@@ -131,23 +202,37 @@ pieces = ["p", "b", "n", "r", "q", "k"]
 white_pieces = []
 black_pieces = []
 
-#Letters of the board
-letters = "ABCDEFGH"
+# Letters of the board
+letters = 'ABCDEFGH'
 
-#Initiate the board array which will store the tiles for drawing the board
+# Initiate the board array which will store the tiles for drawing the board
 board = []
 
-#Define game colors
+# Define game colors
 white = (255, 255, 255)
 black = (47, 79, 79)
 background = (255, 204, 153)
 background_board = (220,220,220)
 
-#Set font
-myfont = pygame.font.SysFont("monospace", 25)
+# Set font for board
+boardFont = pygame.font.SysFont("monospace", 25)
 
-#Array for board coordinates
+# Set font for movement
+registryFont = pygame.font.SysFont("monospace", 14)
+
+# Array for board coordinates
 boardcoord = []
+
+# Array for input box
+box_message = ['White\'s move: ', 'Black\'s move: ']
+
+# Array for possible inputs
+possible_keys = [K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_o, K_k, K_q,
+                 K_b, K_n, K_r, K_e, K_p, K_x, K_a, K_c, K_d, K_e, K_f,
+                 K_g, K_h, K_MINUS, K_PLUS]
+
+# Array for possible special movements
+special_moves = ['o-o-o', 'o-o']
 
 """
 Main function of the game
@@ -162,6 +247,10 @@ def main():
     # Set the board coordinates
     boardcoord.append(board[0].get_xpos()+20)
     boardcoord.append(board[0].get_ypos()+120)
+    # Set the turn
+    turn = 1
+    # Set the flag for mistake in movement
+    no_valid_move = 0
     # Initiate the run status
     run = True
     # Cicle to process the information and the GUI
@@ -171,7 +260,7 @@ def main():
         # Adding background
         screen.fill(background)
         # Drawing the background for the board space
-        pygame.draw.rect(screen, background_board,(0,0,580,620),0)
+        pygame.draw.rect(screen, background_board, (0, 0, 580, 620), 0)
         # Window controls
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -188,17 +277,36 @@ def main():
         # Drawing board coordinates
         for x in range(0,8):
             # X ayis
-            label = myfont.render(str(x+1), 1,black)
-            screen.blit(label,(boardcoord[0]+10,boardcoord[1]+(x*60)))
+            label = boardFont.render(str(x+1), 1,black)
+            screen.blit(label, (boardcoord[0]+10, boardcoord[1]+(x*60)))
             # Y axis
-            label = myfont.render(letters[x], 1, black)
-            screen.blit(label,(boardcoord[0]+(x*60)+50, boardcoord[1] + 460))
+            label = boardFont.render(letters[x], 1, black)
+            screen.blit(label, (boardcoord[0]+(x*60)+50, boardcoord[1] + 460))
+        # Loading and drawing pieces on screen
         load_pieces()
         draw_pieces(screen, board)
-        # Update screen to show changes
-        # pygame.display.update()
-        # time.wait(1)
+
+        # Drawing the input box
+        draw_input_box(screen, turn)
         pygame.display.flip()
+
+        # Print a message if the previous movement was not valid
+        if no_valid_move != 0:
+            pygame.draw.rect(screen, white, (715, 560, 165, 19))
+            pygame.draw.rect(screen, black, (715, 560, 165, 19), 1)
+            label = registryFont.render('Not a valid movement', 1, black)
+            screen.blit(label, (717, 561))
+            pygame.display.flip()
+
+        # Process user input
+        if validate_input(get_user_input(screen), turn):
+            pygame.draw.rect(screen, background, (720, 561, 60, 19))
+            turn = -turn
+            no_valid_move = 0
+        else:
+            no_valid_move = 1
+        print(turn)
+
     # Exit application
     pygame.quit()
 

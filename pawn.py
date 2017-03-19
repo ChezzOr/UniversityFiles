@@ -7,6 +7,7 @@ class pawn(piece):
     # Initiate instance
     def __init__(self):
         self.data = []
+        self.name = 'p'
 
     """ Override of abstract class """
     #Method for recovering the movement of a piece
@@ -17,6 +18,10 @@ class pawn(piece):
             return [1,3,1]
         else:
             return [2,1,0]
+
+    def validate_move(self):
+        return False
+
 
     # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):

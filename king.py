@@ -7,6 +7,7 @@ class king(piece):
     # Initiate instance
     def __init__(self):
         self.data = []
+        self.name = 'k'
 
     """ Override of abstract class """
 
@@ -15,6 +16,9 @@ class king(piece):
     # Maximum quantity of square and possible axis, [1,8,1] 1 space in 8 possible directions identifies a king, 1 means diagonal included
     def get_movement(self):
         return [1,8,1]
+
+    def validate_move(self):
+        return False
 
     # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):
