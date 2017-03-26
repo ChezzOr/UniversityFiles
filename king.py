@@ -17,7 +17,10 @@ class king(piece):
     def get_movement(self):
         return [1,8,1]
 
-    def validate_move(self):
+    def validate_move(self, movement):
+        return False
+
+    def move(self, movement):
         return False
 
     # Check if the piece has made a movement (for special movement validation)

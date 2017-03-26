@@ -19,13 +19,51 @@ class pawn(piece):
         else:
             return [2,1,0]
 
-    def validate_move(self):
-        return False
+    def validate_move(self, movement):
+        if 'x' in movement:
+            #pe4xf5
+            if self.x == int(movement[2]) and self.y == ord(movement[1]):
+                y = ord(movement[4]) - 96
+                x = int(movement[5])
+                if abs(self.y - y) == 1:
+                    if abs(self.x - x) == 1:
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
+            else:
+                return False
+        else:
+            y = ord(movement[1]) - 96
+            x = int(movement[2])
+            if abs(self.y - y) == 0:
+                if self.moved is False:
+                    if 0 < abs(self.x - x) <= 2:
+                        return True
+                    else:
+                        return False
+                else:
+                    if abs(self.x - x) == 1:
+                        return True
+                    else:
+                        return False
+            else:
+                return False
+
+    def move(self, movement):
+        if 'x' in movement:
+            self.y = ord(movement[4]) - 96
+            self.x = int(movement[5])
+        else:
+            self.y = ord(movement[1]) - 96
+            self.x = int(movement[2])
+        self.setMoved()
 
 
     # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):
-        return self.moved()
+        return self.moved
 
     # Set the moved attribute to true to avoid special movements
     def setMoved(self):

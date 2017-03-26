@@ -16,7 +16,10 @@ class knight(piece):
     def get_movement(self):
         return [4, 8, 3]
 
-    def validate_move(self):
+    def validate_move(self, movement):
+        return False
+
+    def move(self, movement):
         return False
 
     def get_fpw(self):

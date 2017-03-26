@@ -15,7 +15,10 @@ class bishop(piece):
     def get_movement(self):
         return [7,4,1]
 
-    def validate_move(self):
+    def validate_move(self, movement):
+        return False
+
+    def move(self, movement):
         return False
 
     def get_fpw(self):

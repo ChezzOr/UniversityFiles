@@ -41,11 +41,11 @@ def load_pieces():
             for y in range(0,8):
                 aux = pawn.pawn()
                 aux.set_x(2)
-                aux.set_y(y)
+                aux.set_y(y+1)
                 white_pieces.append(aux)
                 aux = pawn.pawn()
                 aux.set_x(7)
-                aux.set_y(7-y)
+                aux.set_y(8-y)
                 aux.set_color(2)
                 black_pieces.append(aux)
         #Load bishops
@@ -148,7 +148,7 @@ def get_key():
     while 1:
         event = pygame.event.poll()
         if event.type == KEYDOWN:
-            print(str(event.key))
+            #print(str(event.key))
             return event.key
         elif event.type == QUIT:
             exit(0)
@@ -166,7 +166,7 @@ def get_user_input(screen):
             break
         elif pressed_key in possible_keys:
             user_input += str(chr(pressed_key))
-        print(user_input)
+        #print(user_input)
         pygame.draw.rect(screen, white, (720, 540, 60, 19))
         label = registryFont.render(user_input, 1, black)
         screen.blit(label, (720, 540))
@@ -180,15 +180,46 @@ Function to process and validate user input
 
 
 def validate_input(input_string, turn):
+    print(input_string)
+    if len(input_string) < 3:
+        return False
+    if 'x' in input_string and len(input_string) < 6:
+        return False
     if input_string in special_moves:
-        pass
+        return True
     elif input_string[0] in pieces:
         if turn == 1:
             possible_piece = [piece for piece in white_pieces
                               if piece.get_name() == input_string[0]
-                              and piece.validate_move()]
+                              and piece.validate_move(input_string)]
+        else:
+            possible_piece = [piece for piece in black_pieces
+                              if piece.get_name() == input_string[0]
+                              and piece.validate_move(input_string)]
+        print(possible_piece)
+        if len(possible_piece) == 1:
+            possible_piece[0].move(input_string)
+            return True
+        elif len(possible_piece) > 1:
+            for piece in possible_piece:
+                if piece.get_x() == ord(input_string[1]) and piece.get_y() == int(input_string[2]):
+                    piece.move(input_string)
+                    if 'x' in input_string:
+                        remove_piece(input_string)
+                    return True
+            return False
+        else:
+            return False
     else:
         return False
+
+
+'''
+Remove piece if taken
+'''
+
+def remove_piece(input_string):
+    pass
 
 
 """
@@ -254,9 +285,10 @@ def main():
     # Initiate the run status
     run = True
     # Cicle to process the information and the GUI
+    load_pieces()
+    # Setting screen size
+    screen = pygame.display.set_mode((900, 620))
     while (run):
-        # Setting screen size
-        screen = pygame.display.set_mode((900, 620))
         # Adding background
         screen.fill(background)
         # Drawing the background for the board space
@@ -283,7 +315,6 @@ def main():
             label = boardFont.render(letters[x], 1, black)
             screen.blit(label, (boardcoord[0]+(x*60)+50, boardcoord[1] + 460))
         # Loading and drawing pieces on screen
-        load_pieces()
         draw_pieces(screen, board)
 
         # Drawing the input box
@@ -304,8 +335,8 @@ def main():
             turn = -turn
             no_valid_move = 0
         else:
+            pygame.draw.rect(screen, background, (720, 561, 60, 19))
             no_valid_move = 1
-        print(turn)
 
     # Exit application
     pygame.quit()

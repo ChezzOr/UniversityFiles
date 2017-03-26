@@ -58,5 +58,9 @@ class piece(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def validate_move(self):
+    def validate_move(self, movement):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def move(self, movement):
         raise NotImplementedError()
