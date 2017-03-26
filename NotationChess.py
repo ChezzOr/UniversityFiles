@@ -24,6 +24,8 @@ def load():
             aux = tile.tile()
             if (x+y) % 2 != 0:
                 aux.set_color(2)
+            if y < 2 or 6 <= y:
+                aux.set_occupied(True)
             aux.set_x(x+1)
             aux.set_y(y+1)
             aux.set_xpos(x * 60)
@@ -88,22 +90,22 @@ def load_pieces():
         if x == "q":
             aux = queen.queen()
             aux.set_x(1)
-            aux.set_y(4)
+            aux.set_y(5)
             white_pieces.append(aux)
             aux = queen.queen()
             aux.set_x(8)
-            aux.set_y(4)
+            aux.set_y(5)
             aux.set_color(2)
             black_pieces.append(aux)
         #Load kings
         if x == "k":
             aux = king.king()
             aux.set_x(1)
-            aux.set_y(5)
+            aux.set_y(4)
             white_pieces.append(aux)
             aux = king.king()
             aux.set_x(8)
-            aux.set_y(5)
+            aux.set_y(4)
             aux.set_color(2)
             black_pieces.append(aux)
 
@@ -197,19 +199,25 @@ def validate_input(input_string, turn):
                               if piece.get_name() == input_string[0]
                               and piece.validate_move(input_string)]
         print(possible_piece)
-        if len(possible_piece) == 1:
-            possible_piece[0].move(input_string)
-            return True
-        elif len(possible_piece) > 1:
-            for piece in possible_piece:
-                if piece.get_x() == ord(input_string[1]) and piece.get_y() == int(input_string[2]):
-                    piece.move(input_string)
-                    if 'x' in input_string:
-                        remove_piece(input_string)
-                    return True
+        if len(possible_piece) == 0:
             return False
+        if 'x' in input_string:
+            print(board[8*int(input_string[5])+ord(input_string[4]) - 97].get_occupied())
+            print(8*(int(input_string[5])-1)+ord(input_string[4]) - 97)
+            if board[8*int(input_string[5])+ord(input_string[4]) - 97].get_occupied():
+                remove_piece(input_string)
+                board[8*int(input_string[5])+ord(input_string[4]) - 97].set_occupied(False)
+                possible_piece[0].move(input_string)
+                return True
+            else:
+                return False
         else:
-            return False
+            if not board[8*int(input_string[2])+ord(input_string[1]) - 97].get_occupied():
+                board[8 * int(input_string[2]) + ord(input_string[1]) - 97].set_occupied(True)
+                possible_piece[0].move(input_string)
+                return True
+            else:
+                return False
     else:
         return False
 
@@ -218,8 +226,11 @@ def validate_input(input_string, turn):
 Remove piece if taken
 '''
 
+
 def remove_piece(input_string):
-    pass
+    [black_pieces.pop(idx) for idx, piece in enumerate(black_pieces)
+     if piece.get_x() == int(input_string[5])
+     and piece.get_y() == (ord(input_string[4]) - 96)]
 
 
 """

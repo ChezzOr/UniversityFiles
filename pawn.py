@@ -22,7 +22,7 @@ class pawn(piece):
     def validate_move(self, movement):
         if 'x' in movement:
             #pe4xf5
-            if self.x == int(movement[2]) and self.y == ord(movement[1]):
+            if self.x == int(movement[2]) and self.y == ord(movement[1]) - 96:
                 y = ord(movement[4]) - 96
                 x = int(movement[5])
                 if abs(self.y - y) == 1:
