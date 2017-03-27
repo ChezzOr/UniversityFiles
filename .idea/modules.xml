@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../BayesN/.idea/BayesN.iml" filepath="$PROJECT_DIR$/../BayesN/.idea/BayesN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DTree/.idea/DTree.iml" filepath="$PROJECT_DIR$/../DTree/.idea/DTree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Openchess.iml" filepath="$PROJECT_DIR$/.idea/Openchess.iml" />
+      <module fileurl="file://D:/Chess/Chess/Source/.idea/Source.iml" filepath="D:/Chess/Chess/Source/.idea/Source.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../uninformedSearch/.idea/uninformedSearch.iml" filepath="$PROJECT_DIR$/../uninformedSearch/.idea/uninformedSearch.iml" />
+    </modules>
+  </component>
+</project>
