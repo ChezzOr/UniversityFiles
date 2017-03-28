@@ -213,17 +213,18 @@ def validate_input(input_string, turn):
             return False
         if 'x' in input_string:
             if board[8 * (int(input_string[5])-1) + ord(input_string[4]) - 97].get_occupied():
-                remove_piece(input_string)
-                board[8 * (int(input_string[5])-1) + ord(input_string[4]) - 97].set_occupied(False)
+                remove_piece(input_string, turn)
+                board[8 * (int(input_string[5])-1) + ord(input_string[4]) - 97].set_occupied(True)
+                board[(possible_piece[0].get_x() - 1) * 8 + possible_piece[0].get_y() - 1].set_occupied(False)
                 possible_piece[0].move(input_string)
                 return True
             else:
                 return False
         else:
             if not board[8 * (int(input_string[2])-1) + ord(input_string[1]) - 97].get_occupied():
-                print(8 * (int(input_string[2])-1) + ord(input_string[1]) - 97)
+                #print(8 * (int(input_string[2])-1) + ord(input_string[1]) - 97)
                 board[8 * (int(input_string[2])-1) + ord(input_string[1]) - 97].set_occupied(True)
-                print((possible_piece[0].get_x() - 1) * 8 + possible_piece[0].get_y() - 1)
+                #print((possible_piece[0].get_x() - 1) * 8 + possible_piece[0].get_y() - 1)
                 board[(possible_piece[0].get_x() - 1) * 8 + possible_piece[0].get_y() - 1].set_occupied(False)
                 possible_piece[0].move(input_string)
                 return True
@@ -238,10 +239,18 @@ Remove piece if taken
 '''
 
 
-def remove_piece(input_string):
-    [black_pieces.pop(idx) for idx, piece in enumerate(black_pieces)
-     if piece.get_y() == int(input_string[5])
-     and piece.get_x() == (ord(input_string[4]) - 96)]
+def remove_piece(input_string, turn):
+    if turn == 1:
+        print("enter A")
+        for idx, piece in enumerate(black_pieces):
+            if piece.get_y() == ord(input_string[4]) - 96 and piece.get_x() == int(input_string[5]):
+                black_pieces.pop(idx)
+    else:
+        print("enter B")
+        for idx, piece in enumerate(white_pieces):
+            if piece.get_y() == ord(input_string[4]) - 96 and piece.get_x() == int(input_string[5]):
+                white_pieces.pop(idx)
+                print("popB")
 
 
 """

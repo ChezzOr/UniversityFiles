@@ -21,7 +21,13 @@ class king(piece):
         return False
 
     def move(self, movement):
-        return False
+        if 'x' in movement:
+            self.y = ord(movement[4]) - 96
+            self.x = int(movement[5])
+        else:
+            self.y = ord(movement[1]) - 96
+            self.x = int(movement[2])
+        self.setMoved()
 
     # Check if the piece has made a movement (for special movement validation)
     def hasMoved(self):
