@@ -16,7 +16,23 @@ class bishop(piece):
         return [7,4,1]
 
     def validate_move(self, movement):
-        return False
+        if 'x' in movement:
+            if self.x == int(movement[2]) and self.y == ord(movement[1]) - 96:
+                y = ord(movement[4]) - 96
+                x = int(movement[5])
+                if abs(self.y - y) == abs(self.x - x):
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            y = ord(movement[1]) - 96
+            x = int(movement[2])
+            if abs(self.y - y) == abs(self.x - x):
+                return True
+            else:
+                return False
 
     def move(self, movement):
         if 'x' in movement:

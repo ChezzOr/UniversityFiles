@@ -35,7 +35,6 @@ class queen(piece):
             y = ord(movement[1]) - 96
             x = int(movement[2])
             if abs(self.y - y) == abs(self.x - x):
-                print("a")
                 return True
             elif abs(self.y - y) == 0 and abs(self.x - x) >= 1:
                 return True
@@ -43,7 +42,6 @@ class queen(piece):
                 return True
             else:
                 return False
-
 
     def move(self, movement):
         if 'x' in movement:

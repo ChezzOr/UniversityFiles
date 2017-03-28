@@ -18,7 +18,31 @@ class king(piece):
         return [1,8,1]
 
     def validate_move(self, movement):
-        return False
+        if 'x' in movement:
+            if self.x == int(movement[2]) and self.y == ord(movement[1]) - 96:
+                y = ord(movement[4]) - 96
+                x = int(movement[5])
+                if abs(self.y - y) == abs(self.x - x) and abs(self.y - y) == 1:
+                    return True
+                elif abs(self.y - y) == 0 and abs(self.x - x) == 1:
+                    return True
+                elif abs(self.y - y) == 1 and abs(self.x - x) == 0:
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            y = ord(movement[1]) - 96
+            x = int(movement[2])
+            if abs(self.y - y) == abs(self.x - x):
+                return True
+            elif abs(self.y - y) == 0 and abs(self.x - x) >= 1:
+                return True
+            elif abs(self.y - y) >= 1 and abs(self.x - x) == 0:
+                return True
+            else:
+                return False
 
     def move(self, movement):
         if 'x' in movement:
